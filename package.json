@@ -1,45 +1,42 @@
 {
-    "name": "react-lineto",
-    "version": "3.3.0",
-    "author": "Kevin DeLoach <kdeloach@gmail.com>",
-    "license": "MIT",
-    "main": "dist/react-lineto.js",
-    "types": "src/index.d.ts",
-    "scripts": {
-        "build": "webpack --config webpack.config.js",
-        "demo": "webpack serve --config webpack.demo.config.js --hot --inline",
-        "lint": "eslint --ext js,jsx ./src",
-        "test": "npm run lint"
-    },
-    "homepage": "https://github.com/kdeloach/react-lineto",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/kdeloach/react-lineto.git"
-    },
-    "bugs": {
-        "url": "https://github.com/kdeloach/react-lineto/issues"
-    },
-    "dependencies": {
-        "prop-types": "15.7.2",
-        "react": "17.0.2"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.14.3",
-        "@babel/eslint-parser": "^7.14.4",
-        "@babel/preset-env": "^7.14.4",
-        "@babel/preset-react": "^7.13.13",
-        "babel-loader": "^8.2.2",
-        "core-js": "^3.13.1",
-        "eslint": "^7.27.0",
-        "eslint-plugin-react": "^7.24.0",
-        "eslint-webpack-plugin": "^2.5.4",
-        "react-dom": "17.0.2",
-        "regenerator-runtime": "^0.13.7",
-        "webpack": "^5.38.1",
-        "webpack-cli": "^4.7.0",
-        "webpack-dev-server": "^3.11.2"
-    },
-    "babel": {
-        "presets": ["@babel/preset-env", "@babel/preset-react"]
-    }
+  "name": "react-lineto-hooks",
+  "private": false,
+  "version": "0.0.1",
+  "type": "module",
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --p tsconfig.lib.json && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@types/node": "^22.9.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "globals": "^15.11.0",
+    "postcss": "^8.4.49",
+    "prettier": "^3.3.3",
+    "tailwindcss": "^3.4.15",
+    "typescript": "~5.6.2",
+    "typescript-eslint": "^8.11.0",
+    "vite": "^5.4.10",
+    "vite-plugin-dts": "^4.3.0",
+    "vite-plugin-lib-inject-css": "^2.1.1"
+  }
 }
