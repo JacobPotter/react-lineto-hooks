@@ -1,146 +1,50 @@
-# react-lineto
+# React + TypeScript + Vite
 
-Draw a line between two elements in React.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-[![Build Status](https://app.travis-ci.com/kdeloach/react-lineto.svg?branch=master)](https://app.travis-ci.com/kdeloach/react-lineto)
+Currently, two official plugins are available:
 
-## Getting Started
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-```
-yarn install
-yarn run demo
-```
+## Expanding the ESLint configuration
 
-Browse to [localhost:4567](http://localhost:4567).
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-## Demo
+- Configure the top-level `parserOptions` property like this:
 
-![Demo](https://github.com/kdeloach/react-lineto/raw/master/preview.png)
-
-## Components
-
-* [LineTo](#lineto)
-* [SteppedLineTo](#steppedlineto)
-* [Line](#line)
-
-### LineTo
-
-Draw line between two DOM elements.
-
-#### Example
-
-```
-import LineTo from 'react-lineto';
-
-function render() {
-    return (
-        <div>
-            <div className="A">Element A</div>
-            <div className="B">Element B</div>
-            <LineTo from="A" to="B" />
-        </div>
-    );
-}
-```
-If using multiple instances of `<LineTo />` inside separate components, you must provide a unique key for each of the container divs.
-
-
-#### Properties
-
-| Name        | Type   | Description                                    | Example Values
-| ----------- | ------ | ---------------------------------------------- | --------------
-| borderColor | string | Border color                                   | `#f00`, `red`, etc.
-| borderStyle | string | Border style                                   | `solid`, `dashed`, etc.
-| borderWidth | number | Border width (px)                              |
-| className   | string | Desired CSS className for the rendered element |
-| delay       | number or bool | Force render after delay (ms)          | `0`, `1`, `100`, `true`
-| fromAnchor  | string | Anchor for starting point (Format: "x y")      | `top right`, `bottom center`, `left`, `100% 0`
-| from\*      | string | CSS class name of the first element            |
-| toAnchor    | string | Anchor for ending point (Format: "x y")        | `top right`, `bottom center`, `left`, `100% 0`
-| to\*        | string | CSS class name of the second element           |
-| within      | string | CSS class name of the desired container        |
-| zIndex      | number | Z-index offset                                 |
-
-\* Required
-
-### SteppedLineTo
-
-Draw stepped line between two DOM elements.
-
-#### Example
-
-```
-import { SteppedLineTo } from 'react-lineto';
-
-function render() {
-    return (
-        <div>
-            <div className="A">Element A</div>
-            <div className="B">Element B</div>
-            <SteppedLineTo from="A" to="B" orientation="v" />
-        </div>
-    );
-}
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
 ```
 
-#### Properties
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-| Name        | Type   | Description                                    | Example Values
-| ----------- | ------ | ---------------------------------------------- | --------------
-| borderColor | string | Border color                                   | `#f00`, `red`, etc.
-| borderStyle | string | Border style                                   | `solid`, `dashed`, etc.
-| borderWidth | number | Border width (px)                              |
-| className   | string | Desired CSS className for the rendered element |
-| delay       | number or bool | Force render after delay (ms)          | `0`, `1`, `100`, `true`
-| fromAnchor  | string | Anchor for starting point (Format: "x y")      | `top right`, `bottom center`, `left`, `100% 0`
-| from\*      | string | CSS class name of the first element            |
-| orientation | enum   | "h" for horizonal, "v" for vertical            | `h` or `v`
-| toAnchor    | string | Anchor for ending point (Format: "x y")        | `top right`, `bottom center`, `left`, `100% 0`
-| to\*        | string | CSS class name of the second element           |
-| within      | string | CSS class name of the desired container        |
-| zIndex      | number | Z-index offset                                 |
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
 
-\* Required
-
-### Line
-
-Draw line using pixel coordinates (relative to viewport).
-
-#### Example
-
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
 ```
-import { Line } from 'react-lineto';
-
-function render() {
-    return (
-        <Line x0={0} y0={0} x1={10} y1={10} />
-    );
-}
-```
-
-#### Properties
-
-| Name        | Type   | Description                                    | Example Values
-| ----------- | ------ | ---------------------------------------------- | --------------
-| borderColor | string | Border color                                   | `#f00`, `red`, etc.
-| borderStyle | string | Border style                                   | `solid`, `dashed`, etc.
-| borderWidth | number | Border width (px)                              |
-| className   | string | Desired CSS className for the rendered element |
-| within      | string | CSS class name of the desired container        |
-| x0\*        | number | First X coordinate                             |
-| x1\*        | number | Second X coordinate                            |
-| y0\*        | number | First Y coordinate                             |
-| y1\*        | number | Second Y coordinate                            |
-| zIndex      | number | Z-index offset                                 |
-
-\* Required
-
-## Release Checklist
-
-1. Bump version in `package.json`
-1. Update `CHANGELOG.md`
-1. Run `yarn build` or `./scripts/update`
-1. Create version commit (ex. "2.0.0")
-1. Create matching tag (ex. "2.0.0")
-1. Push `master` branch and tags to origin
-1. Verify Travis CI published NPM package
