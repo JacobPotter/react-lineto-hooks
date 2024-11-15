@@ -204,7 +204,7 @@ const LineTo: FC<LineToProps> = ({
   const fromAnchorRef = useRef(parseAnchor(fromAnchor));
   const toAnchorRef = useRef(parseAnchor(toAnchor));
   const [stateDelay, setStateDelay] = useState(parseDelay(delay));
-  const [update, setUpdate] = useState(false);
+  const [, setUpdate] = useState(false);
 
   useEffect(() => {
     fromAnchorRef.current = parseAnchor(fromAnchor);
@@ -235,10 +235,10 @@ const LineTo: FC<LineToProps> = ({
 
   useEffect(() => {
     if (typeof stateDelay !== "undefined") {
-      const timer = setTimeout(() => setUpdate(!update), stateDelay);
+      const timer = setTimeout(() => setUpdate(prevState => !prevState), stateDelay);
       return () => clearTimeout(timer);
     }
-  }, [stateDelay, update]);
+  }, [stateDelay]);
 
   useEffect(() => {
     if (typeof delay !== "undefined") {
