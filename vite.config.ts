@@ -3,7 +3,6 @@ import { resolve } from "path";
 import react from "@vitejs/plugin-react";
 import dts from "vite-plugin-dts";
 import { libInjectCss } from "vite-plugin-lib-inject-css"; // https://vite.dev/config/
-import tailwindcss from "tailwindcss"; // https://vite.dev/config/
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -28,9 +27,5 @@ export default defineConfig({
       external: ["react", "react/jsx-runtime"],
     },
   },
-  css: {
-    postcss: {
-      plugins: [tailwindcss],
-    },
-  },
+
 });
