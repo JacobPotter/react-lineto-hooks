@@ -3,8 +3,9 @@ import Line from './Line.tsx';
 import SteppedLine from "./SteppedLine.tsx"; // Ensure you import Line component correctly
 
 export interface LineToProps {
-  fromAnchor: string;
-  toAnchor: string;
+  fromAnchor?: string;
+  toAnchor?: string;
+  zIndex?:number;
   delay?: boolean | string | number;
   from: string;
   to: string;

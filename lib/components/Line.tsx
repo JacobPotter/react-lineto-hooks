@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { Property } from 'csstype';
+import React, { useEffect, useRef } from "react";
+import { Property } from "csstype";
 
 interface LineProps {
   x0: number;
@@ -14,8 +14,8 @@ interface LineProps {
   zIndex?: number;
 }
 
-const defaultBorderColor = 'black';
-const defaultBorderStyle = 'solid';
+const defaultBorderColor = "black";
+const defaultBorderStyle = "solid";
 const defaultBorderWidth = 1;
 
 const Line: React.FC<LineProps> = ({
@@ -23,15 +23,15 @@ const Line: React.FC<LineProps> = ({
   y0,
   x1,
   y1,
-  within = '',
+  within = "",
   borderColor,
   borderStyle,
   borderWidth,
   className,
   zIndex,
 }) => {
-  const elRef = useRef<HTMLDivElement|null>(null);
-  const withinRef = useRef<HTMLElement|null>(null);
+  const elRef = useRef<HTMLDivElement | null>(null);
+  const withinRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const findElement = (className: string): HTMLElement | null => {
@@ -43,37 +43,43 @@ const Line: React.FC<LineProps> = ({
       withinRef.current.appendChild(elRef.current);
     }
 
+    const childElement = elRef.current;
     return () => {
-      if (elRef.current && withinRef.current) {
-        withinRef.current.removeChild(elRef.current);
+      if (childElement && withinRef.current) {
+        withinRef.current.removeChild(childElement);
       }
     };
   }, [within]);
 
   const dy = y1 - y0;
   const dx = x1 - x0;
-  const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+  const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
   const length = Math.sqrt(dx * dx + dy * dy);
 
   const positionStyle: React.CSSProperties = {
-    position: 'absolute',
+    position: "absolute",
     top: `${y0}px`,
     left: `${x0}px`,
     width: `${length}px`,
-    zIndex: zIndex ? String(zIndex) : '1',
+    zIndex: zIndex ? String(zIndex) : "1",
     transform: `rotate(${angle}deg)`,
-    transformOrigin: '0 0',
+    transformOrigin: "0 0",
   };
 
   const defaultStyle: React.CSSProperties = {
     borderTopColor: borderColor || defaultBorderColor,
-    borderTopStyle: (borderStyle  || defaultBorderStyle)as  Property.BorderTopStyle,
+    borderTopStyle: (borderStyle ||
+      defaultBorderStyle) as Property.BorderTopStyle,
     borderTopWidth: borderWidth || defaultBorderWidth,
   };
 
   return (
     <div className="react-lineto-placeholder">
-      <div ref={elRef} className={className} style={{ ...defaultStyle, ...positionStyle }} />
+      <div
+        ref={elRef}
+        className={className}
+        style={{ ...defaultStyle, ...positionStyle }}
+      />
     </div>
   );
 };
