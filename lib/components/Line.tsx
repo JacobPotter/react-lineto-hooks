@@ -23,7 +23,7 @@ const Line: React.FC<LineProps> = ({
   y0,
   x1,
   y1,
-  within = "",
+  within,
   borderColor,
   borderStyle,
   borderWidth,
@@ -44,9 +44,10 @@ const Line: React.FC<LineProps> = ({
     }
 
     const childElement = elRef.current;
+    const withinElement = withinRef.current;
     return () => {
-      if (childElement && withinRef.current) {
-        withinRef.current.removeChild(childElement);
+      if (childElement && withinElement) {
+        withinElement.removeChild(childElement);
       }
     };
   }, [within]);
