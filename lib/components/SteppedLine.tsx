@@ -1,22 +1,18 @@
-import React from 'react';
-import Line from './Line.tsx'; // Ensure you import Line component correctly
+import { FC } from "react";
+import Line, { LineProps } from "./Line.tsx"; // Ensure you import Line component correctly
 
-interface SteppedLineProps {
-  x0: number;
-  y0: number;
-  x1: number;
-  y1: number;
-  orientation?: 'h' | 'v';
-  borderWidth?: number;
+export interface SteppedLineProps extends LineProps {
+  orientation?: "h" | "v";
 }
 
 const defaultBorderWidth = 1;
 
-const SteppedLine: React.FC<SteppedLineProps> = (props) => {
-  const { orientation="h" } = props;
+const SteppedLine: FC<SteppedLineProps> = (props) => {
+  const { orientation = "h" } = props;
 
   const renderVertical = () => {
-    const { x0, y0, x1, y1, borderWidth } = props;
+    const { x0, y0, x1, y1, borderWidth,borderStyle,borderColor,className,zIndex,within } = props;
+    const restOfProps = {borderWidth,borderStyle,borderColor,className,zIndex,within}
 
     const roundedX0 = Math.round(x0);
     const roundedY0 = Math.round(y0);
@@ -25,7 +21,15 @@ const SteppedLine: React.FC<SteppedLineProps> = (props) => {
 
     const dx = roundedX1 - roundedX0;
     if (Math.abs(dx) <= 1) {
-      return <Line {...props} x0={roundedX0} y0={roundedY0} x1={roundedX0} y1={roundedY1} />;
+      return (
+        <Line
+          x0={roundedX0}
+          y0={roundedY0}
+          x1={roundedX0}
+          y1={roundedY1}
+          {...restOfProps}
+        />
+      );
     }
 
     const bw = borderWidth || defaultBorderWidth;
@@ -35,17 +39,20 @@ const SteppedLine: React.FC<SteppedLineProps> = (props) => {
     const minX = Math.min(roundedX0, roundedX1) - xOffset;
     const maxX = Math.max(roundedX0, roundedX1);
 
+
+
     return (
-        <div className="react-steppedlineto">
-          <Line {...props} x0={roundedX0} y0={roundedY0} x1={roundedX0} y1={y2} />
-          <Line {...props} x0={roundedX1} y0={roundedY1} x1={roundedX1} y1={y2} />
-          <Line {...props} x0={minX} y0={y2} x1={maxX} y1={y2} />
-        </div>
+      <div className="react-steppedlineto">
+        <Line {...restOfProps} x0={roundedX0} y0={roundedY0} x1={roundedX0} y1={y2} />
+        <Line {...restOfProps} x0={roundedX1} y0={roundedY1} x1={roundedX1} y1={y2} />
+        <Line {...restOfProps} x0={minX} y0={y2} x1={maxX} y1={y2} />
+      </div>
     );
   };
 
   const renderHorizontal = () => {
-    const { x0, y0, x1, y1, borderWidth } = props;
+    const { x0, y0, x1, y1, borderWidth,borderStyle,borderColor,className,zIndex,within} = props;
+    const restOfProps = {borderWidth,borderStyle,borderColor,className,zIndex,within}
 
     const roundedX0 = Math.round(x0);
     const roundedY0 = Math.round(y0);
@@ -54,7 +61,15 @@ const SteppedLine: React.FC<SteppedLineProps> = (props) => {
 
     const dy = roundedY1 - roundedY0;
     if (Math.abs(dy) <= 1) {
-      return <Line {...props} x0={roundedX0} y0={roundedY0} x1={roundedX1} y1={roundedY0} />;
+      return (
+        <Line
+          {...restOfProps}
+          x0={roundedX0}
+          y0={roundedY0}
+          x1={roundedX1}
+          y1={roundedY0}
+        />
+      );
     }
 
     const bw = borderWidth || defaultBorderWidth;
@@ -65,15 +80,15 @@ const SteppedLine: React.FC<SteppedLineProps> = (props) => {
     const maxY = Math.max(roundedY0, roundedY1);
 
     return (
-        <div className="react-steppedlineto">
-          <Line {...props} x0={roundedX0} y0={roundedY0} x1={x2} y1={roundedY0} />
-          <Line {...props} x0={roundedX1} y0={roundedY1} x1={x2} y1={roundedY1} />
-          <Line {...props} x0={x2} y0={minY} x1={x2} y1={maxY} />
-        </div>
+      <div className="react-steppedlineto">
+        <Line {...restOfProps} x0={roundedX0} y0={roundedY0} x1={x2} y1={roundedY0} />
+        <Line {...restOfProps} x0={roundedX1} y0={roundedY1} x1={x2} y1={roundedY1} />
+        <Line {...restOfProps} x0={x2} y0={minY} x1={x2} y1={maxY} />
+      </div>
     );
   };
 
-  return orientation === 'h' ? renderHorizontal() : renderVertical();
+  return orientation === "h" ? renderHorizontal() : renderVertical();
 };
 
 export default SteppedLine;

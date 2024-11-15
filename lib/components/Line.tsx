@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Property } from "csstype";
 
-interface LineProps {
+export interface LineProps {
   x0: number;
   y0: number;
   x1: number;
