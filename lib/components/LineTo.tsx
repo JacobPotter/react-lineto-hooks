@@ -235,10 +235,10 @@ const LineTo: FC<LineToProps> = ({
 
   useEffect(() => {
     if (typeof stateDelay !== "undefined") {
-      const timer = setTimeout(() => setUpdate(!update), stateDelay);
+      const timer = setTimeout(() => setUpdate(prevState => !prevState), stateDelay);
       return () => clearTimeout(timer);
     }
-  }, [stateDelay, update]);
+  }, [stateDelay]);
 
   useEffect(() => {
     if (typeof delay !== "undefined") {
